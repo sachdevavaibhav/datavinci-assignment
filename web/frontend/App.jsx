@@ -9,6 +9,8 @@ import {
   PolarisProvider,
 } from "./components";
 
+import { DataProvider } from "./components/context/DataContext";
+
 export default function App() {
   // Any .tsx or .jsx files in /pages will become a route
   // See documentation for <Routes /> for more info
@@ -18,19 +20,13 @@ export default function App() {
   return (
     <PolarisProvider>
       <BrowserRouter>
+      <DataProvider>
         <AppBridgeProvider>
           <QueryProvider>
-            <NavigationMenu
-              navigationLinks={[
-                {
-                  label: t("NavigationMenu.pageName"),
-                  destination: "/pagename",
-                },
-              ]}
-            />
             <Routes pages={pages} />
           </QueryProvider>
         </AppBridgeProvider>
+      </DataProvider>
       </BrowserRouter>
     </PolarisProvider>
   );
