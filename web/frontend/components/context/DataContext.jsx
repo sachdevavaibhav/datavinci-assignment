@@ -48,12 +48,34 @@ const calculateRepeatCustomerPercentage = (data) => {
     return repeatCustomerPercentage;
 }
 
+const calculateRevenueByCategory = (data) => {
+    const revenueByCategory = {};
+  
+    data.forEach((item) => {
+      const category = item.category;
+      const revenue = parseFloat(item.revenue.replace('$', ''));
+  
+      if (revenueByCategory[category]) {
+        revenueByCategory[category] += revenue;
+      } else {
+        revenueByCategory[category] = revenue;
+      }
+    });
+  
+    const category = Object.keys(revenueByCategory);
+    const revenue = Object.values(revenueByCategory);
+  
+    return { category, revenue };
+  }
+  
+
 export const DataContext = createContext({
     data: [],
     setData: () => {},
     totalRevenue: 0,
     totalCost: 0,
     repeatCustomerPercentage: 0,
+    revenueByCategory: { category: [], revenue: [] },
 });
 
 export const DataProvider = ({ children }) => {
@@ -61,6 +83,7 @@ export const DataProvider = ({ children }) => {
     const [totalRevenue, setTotalRevenue] = useState(0);
     const [totalCost, setTotalCost] = useState(0);
     const [repeatCustomerPercentage, setRepeatCustomerPercentage] = useState(0);
+    const [revenueByCategory, setRevenueByCategory] = useState({ category: [], revenue: [] });
 
     useEffect(() => {
         const totalRevenue = calculateTotalRevenue(data);
@@ -77,7 +100,12 @@ export const DataProvider = ({ children }) => {
         setRepeatCustomerPercentage(repeatCustomerPercentage);
     }, [data])
 
-    const value = {data, setData, totalRevenue, totalCost, repeatCustomerPercentage}
+    useEffect(() => {
+        const revenueByCategory = calculateRevenueByCategory(data);
+        setRevenueByCategory(revenueByCategory);
+    }, [data])
+
+    const value = {data, setData, totalRevenue, totalCost, repeatCustomerPercentage, revenueByCategory}
 
     return <DataContext.Provider value={value}> {children} </DataContext.Provider>
 
