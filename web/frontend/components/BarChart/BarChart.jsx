@@ -1,4 +1,4 @@
-import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend} from 'chart.js';
+import {Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, plugins} from 'chart.js';
 import { Bar } from 'react-chartjs-2';
   
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -40,12 +40,28 @@ export const BarChart = () => {
         scales: {
           y: {
             beginAtZero: true,
+            title: {
+              display: true,
+              text: "Category",
+            }
           },
+          x: {
+            title: {
+              display: true,
+              text: "Revenue",
+            }
+          }
         },
+        plugins: {
+          title: {
+            display: true,
+            text: "Revenue by Category",
+          }
+        }
       };
 
     return (
-        <div className="chart-container">
+        <div style={{marginBottom:"3rem"}}>
             <Bar data={chartData} options={chartOptions} />
         </div>
     );

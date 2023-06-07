@@ -9,16 +9,18 @@ export const ScoreCardLayout = () => {
     const targetRevenue = 200000
     const targetCost = 6000
   return (
-    <Layout>
-        <Layout.Section oneThird>
-            <ScoreCard label="Total Revenue" value={(totalRevenue/targetRevenue)*100} heading={`$${totalRevenue}`} target={targetRevenue} />
-        </Layout.Section>
-        <Layout.Section oneThird>
-            <ScoreCard label="Total Cost" value={(totalCost/targetCost)*100} heading={`$${totalCost}`} target={targetCost}/>
-        </Layout.Section>
-        <Layout.Section oneThird>
-            <ScoreCard label="Repeat Customer Percentage" value={repeatCustomerPercentage} heading={`${repeatCustomerPercentage}%`} />
-        </Layout.Section>
-  </Layout>
+    <div style={{marginBottom:"2rem"}}>
+        <Layout>
+            <Layout.Section oneThird>
+                <ScoreCard label="Total Revenue" value={(totalRevenue/targetRevenue)*100} heading={`$${totalRevenue}`} target={targetRevenue} />
+            </Layout.Section>
+            <Layout.Section oneThird>
+                <ScoreCard label="Total Cost" value={(totalCost/targetCost)*100} heading={`$${totalCost}`} target={targetCost}/>
+            </Layout.Section>
+            <Layout.Section oneThird>
+                <ScoreCard label="Repeat Customer Percentage" value={repeatCustomerPercentage} heading={`${repeatCustomerPercentage}%`} />
+            </Layout.Section>
+        </Layout>
+    </div>
   )
 }
