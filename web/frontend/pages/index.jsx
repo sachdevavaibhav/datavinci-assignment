@@ -1,6 +1,6 @@
 import {Page} from "@shopify/polaris";
 import { TitleBar } from "@shopify/app-bridge-react";
-import {ScoreCardLayout, BarChart} from "../components/index";
+import {ScoreCardLayout, BarChart, TopProductsTable} from "../components/index";
 
 
 export default function HomePage() {
@@ -9,6 +9,7 @@ export default function HomePage() {
       <TitleBar title={"Dashboard"} primaryAction={null} />
       <ScoreCardLayout />
       <BarChart />
+      <TopProductsTable />
     </Page>
   );
 }

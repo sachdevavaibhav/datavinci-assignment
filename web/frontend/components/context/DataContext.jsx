@@ -67,6 +67,26 @@ const calculateRevenueByCategory = (data) => {
   
     return { category, revenue };
   }
+
+const calculateTopProducts = (data) => {
+    const topProducts = [];
+    const {category, revenue} = calculateRevenueByCategory(data);
+    const maxRevenue = [...revenue].sort((a, b) => b - a);
+    const maxRevenueIdx = [];
+    for (let i = 0; i < 5; i++) {
+        const maxNumber = maxRevenue[i];
+        const maxIndex = revenue.indexOf(maxNumber);
+        maxRevenueIdx.push(maxIndex);
+      }
+    maxRevenueIdx.forEach((idx) => {
+        const product = {
+            category: category[idx],
+            revenue: Math.round(revenue[idx]),
+        };
+        topProducts.push(product);
+    });
+    return topProducts;
+}
   
 
 export const DataContext = createContext({
@@ -76,6 +96,7 @@ export const DataContext = createContext({
     totalCost: 0,
     repeatCustomerPercentage: 0,
     revenueByCategory: { category: [], revenue: [] },
+    topProducts: [],
 });
 
 export const DataProvider = ({ children }) => {
@@ -84,6 +105,7 @@ export const DataProvider = ({ children }) => {
     const [totalCost, setTotalCost] = useState(0);
     const [repeatCustomerPercentage, setRepeatCustomerPercentage] = useState(0);
     const [revenueByCategory, setRevenueByCategory] = useState({ category: [], revenue: [] });
+    const [topProducts, setTopProducts] = useState([]);
 
     useEffect(() => {
         const totalRevenue = calculateTotalRevenue(data);
@@ -105,7 +127,12 @@ export const DataProvider = ({ children }) => {
         setRevenueByCategory(revenueByCategory);
     }, [data])
 
-    const value = {data, setData, totalRevenue, totalCost, repeatCustomerPercentage, revenueByCategory}
+    useEffect(() => {
+        const topProducts = calculateTopProducts(data);
+        setTopProducts(topProducts);
+    }, [data])
+
+    const value = {data, setData, totalRevenue, totalCost, repeatCustomerPercentage, revenueByCategory, topProducts}
 
     return <DataContext.Provider value={value}> {children} </DataContext.Provider>
 
